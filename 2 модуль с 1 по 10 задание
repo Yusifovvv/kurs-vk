@@ -1,0 +1,161 @@
+#1
+def average(line):
+  """Вычисляет среднее значение чисел из строки.
+
+  Args:
+    line: Строка, содержащая целые числа, разделенные пробелами.
+
+  Returns:
+    Среднее значение чисел в строке или None, если строка пуста.
+  """
+  numbers = [int(x) for x in line.split()]
+  return sum(numbers) / len(numbers) if numbers else None
+
+# Основной цикл программы
+while True:
+  line = input()
+  result = average(line)
+  if result is not None:
+    print(round(result, 2))  # Округляем до 2 знаков после запятой
+  else:
+    break
+
+#2
+def process_string(line):
+  """Обрабатывает строку, преобразуя регистр и удаляя специальные символы.
+
+  Args:
+    line: Входная строка.
+
+  Returns:
+    Обработанная строка.
+  """
+  if line.startswith('!'):
+    line = line.upper()  # Верхний регистр, если начинается с '!'
+  else:
+    line = line.lower()  # Нижний регистр в противном случае
+  
+  # Удаляем символы '!', '@', '#', '%'
+  for char in '!@#%':
+    line = line.replace(char, '') 
+  
+  return line
+
+# Основной цикл программы
+while True:
+  line = input()
+  if not line:
+    break
+  processed_line = process_string(line)
+  print(processed_line)
+ 
+ #3
+ start, end, step = map(int, input().split())
+result = map(lambda x: x**2 if x % 2 else -x, range(start, end, step))  # Убрали + 1
+for num in result:
+  print(num)
+  
+ #4
+ fib_cache = {}  # Глобальный словарь для кэширования результатов
+
+def fibonacci(n):
+  """Вычисляет n-е число Фибоначчи с помощью рекурсии и кэширования."""
+  if n in fib_cache:
+    return fib_cache[n]  # Если результат уже вычислен, возвращаем его из кэша
+  if n == 1 or n == 2:
+    result = 1
+  else:
+    result = fibonacci(n-1) + fibonacci(n-2)
+  fib_cache[n] = result  # Сохраняем результат в кэше
+  return result
+
+# Считываем порядковый номер n
+n = int(input())
+
+# Выводим n-е число Фибоначчи
+print(fibonacci(n))
+
+#5
+def map(func, seq):
+  """Генератор, применяющий функцию к каждому элементу последовательности."""
+  for item in seq:
+    yield func(item)  # Применяем функцию и возвращаем результат с помощью yield
+
+# Считываем функцию и последовательность из входных данных
+func_in, seq_in = eval(input()), eval(input())
+
+# Применяем функцию к последовательности и выводим результаты
+for x in map(func_in, seq_in):
+  print(x)
+  
+#6
+def filter(func, seq):
+  """Генератор, фильтрующий последовательность по условию функции."""
+  for item in seq:
+    if func(item):
+      yield item
+
+# Считываем функцию и последовательность из входных данных
+func_in, seq_in = eval(input()), eval(input())
+
+# Применяем фильтр и выводим результаты
+for x in filter(func_in, seq_in):
+  print(x)
+ 
+#7 
+def cache_deco(func):
+  cache = {}
+
+  def wrapper(*args):
+    if args not in cache:
+      cache[args] = func(*args)
+    return cache[args]
+
+  return wrapper
+
+code = []
+while data := input():
+  code.append(data)
+code = "\n".join(code)
+exec(code)
+
+#8
+def repeat_deco(n=1):
+  """Декоратор для повторения вызова функции n раз."""
+  def decorator(func):
+    def wrapper(*args, **kwargs):
+      result = None
+      for _ in range(n):
+        result = func(*args, **kwargs)
+      return result
+    return wrapper
+  return decorator
+
+code = []
+while data := input():
+  code.append(data)
+code = "\n".join(code)
+exec(code)
+
+#9
+a = int(input())
+
+def f():
+  global a  # Указываем, что мы хотим изменить глобальную переменную 'a'
+  a += 10  # Увеличиваем значение 'a' на 10
+  
+f()
+
+print(a)
+
+#10
+def g():
+  b = int(input())
+  def h():
+    nonlocal b  # Указываем, что мы хотим изменить 'b' из объемлющей области
+    b += 10
+  h()
+  print(b)
+g()
+
+ 
